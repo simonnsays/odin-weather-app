@@ -14,13 +14,3 @@
   --color-text-secondary: #4A4F63;
   --color-border: #D9DBE8;
 }
-
-[data-theme="dark"] {
-  --color-bg: #0F1220;
-  --color-surface: #161A2E;
-  --color-surface-elevated: #1E2440;
-
-  --color-text: #E6E9FF;
-  --color-text-secondary: #B7BEDC;
-  --color-border: #2A3155;
-}

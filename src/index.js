@@ -1,12 +1,12 @@
 
-const locInput = 'kaypian'
-const key = 'YAGVLE6WETGXYAW8PQMHBUJAM'
-const req = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${locInput}?key=${key}`
-let isCelc = true 
-// let temp = '0°' // degree in celcius
-const getWeather = async () => {
-    try {
+const input = document.querySelector('input')
+const searchBtn = document.querySelector('.search-button')
 
+const key = 'YAGVLE6WETGXYAW8PQMHBUJAM'
+let isCelc = true 
+const getWeather = async (location) => {
+    const req = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=${key}`
+    try {
         const response = await fetch(req)
         const data = await response.json()
         return data
@@ -15,8 +15,7 @@ const getWeather = async () => {
     }
 }
 
-const interpretData = async() => {
-    const data = await getWeather()
+const interpretData = (data) => {
     const curr = data.currentConditions
     return {
         location: data.resolvedAddress,
@@ -27,25 +26,33 @@ const interpretData = async() => {
     }
 }
 
-const interpretTemp = (num) => {
-    
+const interpretTemp = (num) => { 
     return isCelc 
     ? Math.round((num - 32) * 5 / 9 * 10) / 10
     : Math.round(num * 10) / 10
 }
 
-const displayWeather = async () => {
-    const data = await interpretData()
-
+const displayWeather = (data) => {    
     console.log(data.location)
     console.log(`${interpretTemp(data.temp)}°`)
     console.log(`Feels like ${interpretTemp(data.feelslike)}°`)
     console.log(data.condition)
 }
 
-// interpretData()
-// console.log(await interpretData())
-displayWeather()
+const search = async() => {
+    if (input.value.length === 0) return
 
-// farenheight: Math.round(curr.temp * 10) / 10,
-// celcius: Math.round((curr.temp - 32) * 5 / 9 * 10) / 10,
+    try {
+        const rawData = await getWeather(input.value)
+        const data = interpretData(rawData)
+        displayWeather(data)
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+searchBtn.addEventListener('click', search)
+
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') search()
+})
