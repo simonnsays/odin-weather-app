@@ -6,18 +6,27 @@
     </head>
     <body>
         <div class="container">
-            <header>
+            <div class="header">
                 <div class="logo">Weather App</div>
                 <div class="search">
-                    <div>
-                        <input type="text" name="weather_location" id="locInput">
-                        <button class="search-button">Search</button>
-                    </div>
+                    <input type="text" name="weather_location" id="locInput"> </input>
+                    <button class="search-button">
+                        <img src="./asset/magnify.svg" alt="search">
+                    </button>
                 </div>
-            </header>
-            <body>
+            </div class="header">
+            <div class="content">
+                <div>
+                    <p class="temp">27°</p>
+                    <div>
+                        <p class="condition">Partially cloudy</p>
+                        <p class="feels-like">Feels like 30°</p>
+                    </div>
+                    <p class="location"></p>
+                </div>
+            </div>
             
             
-        </div></body>
+        </div>
     </body>
 </html>

@@ -1,9 +1,15 @@
 
+import './style.css'
 const input = document.querySelector('input')
 const searchBtn = document.querySelector('.search-button')
 
 const key = 'YAGVLE6WETGXYAW8PQMHBUJAM'
 let isCelc = true 
+
+const select = (name) => {
+    return document.querySelector(name)
+}
+
 const getWeather = async (location) => {
     const req = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=${key}`
     try {
@@ -32,11 +38,17 @@ const interpretTemp = (num) => {
     : Math.round(num * 10) / 10
 }
 
-const displayWeather = (data) => {    
-    console.log(data.location)
-    console.log(`${interpretTemp(data.temp)}°`)
-    console.log(`Feels like ${interpretTemp(data.feelslike)}°`)
-    console.log(data.condition)
+const displayWeather = (data) => {   
+    const tempEl = select('.temp')
+    const conditionEl = select('.condition')
+    const locationEl = select('.location')
+    const feelsEl = select('.feels-like')
+    console.log(tempEl.textContent)
+
+    locationEl.textContent = data.location
+    tempEl.textContent = `${interpretTemp(data.temp)}°`
+    conditionEl.textContent = data.condition
+    feelsEl.textContent = `Feels like ${interpretTemp(data.feelslike)}°`
 }
 
 const search = async() => {
@@ -50,6 +62,8 @@ const search = async() => {
         console.log(err)
     }
 }
+
+console.clear()
 
 searchBtn.addEventListener('click', search)
 
